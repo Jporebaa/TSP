@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="com.example.tspsystem.controllers.LoginController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <AnchorPane prefHeight="500.0" prefWidth="304.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
          <children>
@@ -45,8 +45,8 @@
             <TextField id="usernameField" layoutX="200.0" layoutY="173.0" prefHeight="40.0" prefWidth="338.0" promptText="Nazwa użytkownika" />
             <PasswordField layoutX="200.0" layoutY="230.0" prefHeight="40.0" prefWidth="338.0" promptText="Hasło" />
             <ButtonBar layoutX="220.0" layoutY="319.0" prefHeight="40.0" prefWidth="200.0" />
-            <Button layoutX="395.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Zaloguj" textFill="WHITE" />
-            <Button layoutX="568.0" layoutY="450.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Rejestracja" textFill="WHITE" />
+            <Button onAction="#handleLoginButtonAction" layoutX="395.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Zaloguj" textFill="WHITE" />
+            <Button fx:id="registerButton" layoutX="568.0" layoutY="450.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Rejestracja" textFill="WHITE" />
          </children>
       </AnchorPane>
    </right>
