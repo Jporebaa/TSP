@@ -10,10 +10,10 @@ module com.example.tspsystem {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.net.http; // Dodajemy wymagany moduł java.net.http
 
     opens com.example.tspsystem to javafx.fxml;
     exports com.example.tspsystem;
     exports com.example.tspsystem.controllers;
     opens com.example.tspsystem.controllers to javafx.fxml;
-
 }

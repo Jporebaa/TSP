@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--<?import com.gluonhq.charm.glisten.control.TextField?>-->
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tspsystem.controllers.HomeController">
     <left>
         <AnchorPane prefHeight="501.0" prefWidth="169.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
             <children>
@@ -27,17 +24,16 @@
                 </Label>
                 <Button layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
                 <Button layoutX="-1.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="221.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE" />
-            <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
-               <image>
-                  <Image url="@../icon/avatar.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="33.0" fitWidth="43.0" layoutX="177.0" layoutY="6.0">
-               <image>
-                  <Image url="@../icon/Kolo.png" />
-               </image>
-            </ImageView>
-
+                <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
+                    <image>
+                        <Image url="@../icon/avatar.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="33.0" fitWidth="43.0" layoutX="177.0" layoutY="6.0">
+                    <image>
+                        <Image url="@../icon/Kolo.png" />
+                    </image>
+                </ImageView>
             </children>
         </AnchorPane>
     </left>
@@ -50,27 +46,31 @@
                         <Label layoutX="119.0" layoutY="468.0" textFill="#fcfafa" />
                         <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Michał" textFill="WHITE" />
                         <Button layoutY="46.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Grupa 1 " textFill="WHITE" />
-                  <Button layoutX="167.0" layoutY="456.0" mnemonicParsing="false" />
-                  <ImageView fitHeight="31.0" fitWidth="56.0" layoutX="164.0" layoutY="456.0">
-                     <image>
-                        <Image url="@../icon/plus.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="14.0" layoutY="9.0">
-                     <image>
-                        <Image url="@../icon/avatar.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="13.0" layoutY="55.0">
-                     <image>
-                        <Image url="@../icon/avatar.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="23.0" fitWidth="26.0" layoutX="33.0" layoutY="49.0">
-                     <image>
-                        <Image url="@../icon/avatar.png" />
-                     </image>
-                  </ImageView>
+                        <Button fx:id="plusButton" onAction="#handlePlusButtonAction" text="+"
+                        layoutX="190.0" layoutY="451.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="56.0" style="-fx-background-color: transparent;">
+                            <graphic>
+                                <ImageView fitHeight="31.0" fitWidth="56.0">
+                                    <image>
+                                        <Image url="@../icon/plus.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="14.0" layoutY="9.0">
+                            <image>
+                                <Image url="@../icon/avatar.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="13.0" layoutY="55.0">
+                            <image>
+                                <Image url="@../icon/avatar.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="23.0" fitWidth="26.0" layoutX="33.0" layoutY="49.0">
+                            <image>
+                                <Image url="@../icon/avatar.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
                 <Circle fill="#ffffff00" layoutX="269.0" layoutY="229.0" radius="100.0" stroke="#f5f5f5" strokeType="INSIDE" />
