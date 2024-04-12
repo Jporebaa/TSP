@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="com.example.tspsystem.controllers.GroupsController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <AnchorPane prefHeight="500.0" prefWidth="210.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
          <children>
@@ -26,7 +26,7 @@
                   <Image url="@../icon/avatar.png" />
                </image>
             </ImageView>
-            <Button layoutX="42.0" layoutY="442.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
+            <Button onAction="#handleLogoutButtonAction" layoutX="42.0" layoutY="442.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
          </children>
       </AnchorPane>
    </left>

@@ -11,10 +11,13 @@ module com.example.tspsystem {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires javax.websocket.client.api;
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.tspsystem to javafx.fxml;
     exports com.example.tspsystem;
     exports com.example.tspsystem.controllers;
     opens com.example.tspsystem.controllers to javafx.fxml;
+    exports com.example.tspsystem.model to com.fasterxml.jackson.databind;
 
 }
