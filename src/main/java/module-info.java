@@ -3,6 +3,7 @@ module com.example.tspsystem {
     requires javafx.fxml;
     requires javafx.web;
     requires javafx.graphics;
+    requires java.net.http;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
