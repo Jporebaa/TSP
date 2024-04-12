@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="com.example.tspsystem.controllers.HomeController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <left>
         <AnchorPane prefHeight="501.0" prefWidth="169.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
             <children>
@@ -25,14 +25,15 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <Button layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
+                <Button onAction="#handleLogoutButtonAction" layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
                 <Button layoutX="-1.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="221.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE" />
             <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
                <image>
                   <Image url="@../icon/avatar.png" />
                </image>
+
             </ImageView>
-            <ImageView fitHeight="33.0" fitWidth="43.0" layoutX="177.0" layoutY="6.0">
+            <ImageView onMouseClicked="#handleSettingsButtonAction" fitHeight="33.0" fitWidth="43.0" layoutX="177.0" layoutY="6.0">
                <image>
                   <Image url="@../icon/Kolo.png" />
                </image>
@@ -48,10 +49,9 @@
                 <AnchorPane layoutX="557.0" prefHeight="501.0" prefWidth="246.0" style="-fx-background-color: #263F73;">
                     <children>
                         <Label layoutX="119.0" layoutY="468.0" textFill="#fcfafa" />
-                        <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Michał" textFill="WHITE" />
-                        <Button layoutY="46.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Grupa 1 " textFill="WHITE" />
-                  <Button layoutX="167.0" layoutY="456.0" mnemonicParsing="false" />
-                  <ImageView fitHeight="31.0" fitWidth="56.0" layoutX="164.0" layoutY="456.0">
+                        <Button onAction="#handleChatButtonAction" mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Michał" textFill="WHITE" />
+                        <Button onAction="#handleChatButtonAction" layoutY="46.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Grupa 1 " textFill="WHITE" />
+                  <ImageView onMouseClicked="#handleGroupsButtonAction" fitHeight="31.0" fitWidth="56.0" layoutX="164.0" layoutY="456.0">
                      <image>
                         <Image url="@../icon/plus.png" />
                      </image>

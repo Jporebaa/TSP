@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="com.example.tspsystem.controllers.ChatController" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <left>
         <VBox prefWidth="200.0" style="-fx-background-color: #2C3E50;">
             <AnchorPane prefHeight="600.0" prefWidth="229.0" style="-fx-background-color: #263F73;" VBox.vgrow="ALWAYS">
@@ -34,7 +34,7 @@
                      <Image url="@../icon/micro.png" />
                   </image>
                </ImageView>
-               <Button layoutX="38.0" layoutY="542.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
+               <Button onAction="#handleLogoutButtonAction" layoutX="38.0" layoutY="542.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
                <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="147.0" layoutY="12.0">
                   <image>
                      <Image url="@../icon/Kolo.png" />
