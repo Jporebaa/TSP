@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
+
 public class GroupsController {
     @FXML
     private void handleLogoutButtonAction(javafx.event.ActionEvent event) throws IOException {
@@ -18,5 +19,5 @@ public class GroupsController {
         stage.setScene(scene);
         stage.show();
     }
-}
 
+}

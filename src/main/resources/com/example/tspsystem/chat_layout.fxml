@@ -37,7 +37,7 @@
     </center>
     <right>
         <VBox prefWidth="200.0" style="-fx-background-color: #BDC3C7;">
-            <ListView fx:id="userList" VBox.vgrow="ALWAYS"/>
+            <ListView fx:id="groupsList" VBox.vgrow="ALWAYS"/>
         </VBox>
     </right>
 </BorderPane>

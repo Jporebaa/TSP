@@ -14,7 +14,7 @@ public class LoginController {
     @FXML
     private void handleLoginButtonAction(javafx.event.ActionEvent event) throws IOException {
         // Ładuje layout dashboard
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("chat_layout.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
