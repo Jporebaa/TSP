@@ -10,9 +10,9 @@ import java.io.IOException;
 
 public class SettingsController {
     @FXML
-    private void handleLogoutButtonAction(javafx.event.ActionEvent event) throws IOException {
+    private void handleHomeButtonAction(javafx.event.ActionEvent event) throws IOException {
         // Ładuje layout dashboard
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

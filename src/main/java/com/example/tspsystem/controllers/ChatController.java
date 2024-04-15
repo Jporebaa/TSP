@@ -1,5 +1,6 @@
 package com.example.tspsystem.controllers;
 
+import com.example.tspsystem.HelloApplication;
 import com.example.tspsystem.model.ChatGroup;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,13 +48,36 @@ public class ChatController {
 
     @FXML
     private Button sendButton;
+    @FXML
+    private Button userNameButton;
 
     private Session session;
 
 
     @FXML
     private void handleLogoutButtonAction(javafx.event.ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/path/to/login.fxml"));
+        // Ładuje layout dashboard
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void handleSettingsButtonAction(javafx.scene.input.MouseEvent event) throws IOException {
+        // Ładuje layout ustawień
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("settings.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void handleGroupsButtonAction(javafx.scene.input.MouseEvent event) throws IOException {
+        // Ładuje layout grup
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("groups.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -72,10 +96,12 @@ public class ChatController {
 
     @FXML
     private void sendMessage() {
+        String userName = userNameButton.getText();  // Pobiera tekst z przycisku użytkownika
         String message = messageInput.getText().trim();
         if (!message.isEmpty() && session != null) {
             try {
-                session.getBasicRemote().sendText(message);
+                String fullMessage = userName + ": " + message;  // Dodaje nazwę użytkownika do wiadomości
+                session.getBasicRemote().sendText(fullMessage);
                 messageInput.clear();
             } catch (IOException e) {
                 e.printStackTrace();

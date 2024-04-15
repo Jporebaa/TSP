@@ -5,28 +5,39 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.shape.Line?>
 <BorderPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tspsystem.controllers.ChatController">
     <left>
-        <VBox prefWidth="200.0" style="-fx-background-color: #2C3E50;">
-            <AnchorPane prefHeight="600.0" prefWidth="229.0" style="-fx-background-color: #263F73;" VBox.vgrow="ALWAYS">
-                <children>
-                    <Button layoutX="5.0" layoutY="14.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="196.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE">
-                        <font>
-                            <Font name="System Bold" size="18.0"/>
-                        </font>
-                    </Button>
-                    <Circle fill="#908a8a" layoutX="45.0" layoutY="51.0" radius="30.0"/>
-                    <ImageView fitHeight="40.0" fitWidth="47.0" layoutX="21.0" layoutY="31.0">
+        <AnchorPane prefHeight="501.0" prefWidth="169.0" style="-fx-background-color: #263F73;">
+            <ImageView onMouseClicked="#handleGroupsButtonAction" fitHeight="31.0" fitWidth="56.0" layoutX="164.0" layoutY="456.0">
+                <image>
+                    <Image url="@../icon/plus.png" />
+                </image>
+            </ImageView>
+
+            <children>
+                <Label layoutX="119.0" layoutY="468.0" textFill="#fcfafa" />
+                <Line endX="119.33332824707031" endY="7.62939453125E-6" layoutX="100.0" layoutY="73.0" startX="-100.0" stroke="WHITE" />
+                <Circle fill="#ffffff00" layoutX="99.0" layoutY="240.0" radius="100.0" stroke="#f5f5f5" strokeType="INSIDE" />
+                <Label layoutX="68.0" layoutY="228.0" prefHeight="23.0" prefWidth="84.0" text="TSP SYSTEM" textFill="#fcfafa">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+
+                <Button fx:id="userNameButton" layoutX="-1.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="221.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE">
+                    <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
                         <image><Image url="@../icon/avatar.png"/></image>
                     </ImageView>
-                    <Circle fill="#908a8a" layoutX="100.0" layoutY="195.0" radius="39.0"/>
-                    <ImageView fitHeight="62.0" fitWidth="69.0" layoutX="66.0" layoutY="164.0">
-                        <image><Image url="@../icon/micro.png"/></image>
-                    </ImageView>
-                    <Button onAction="#handleLogoutButtonAction" layoutX="38.0" layoutY="542.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE"/>
-                </children>
-            </AnchorPane>
-        </VBox>
+                </Button>
+                <Button onAction="#handleLogoutButtonAction" layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
+                <ImageView onMouseClicked="#handleSettingsButtonAction" fitHeight="33.0" fitWidth="43.0" layoutX="177.0" layoutY="6.0">
+                    <image>
+                        <Image url="@../icon/Kolo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
     </left>
     <center>
         <VBox fx:id="mainContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="10" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
