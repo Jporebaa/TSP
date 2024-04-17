@@ -35,18 +35,14 @@ public class LoginController {
     @FXML
     private void handleRegisterButtonAction(ActionEvent event) {
         try {
-            // Ładowanie widoku rejestracji
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/register-view.fxml"));
-            Parent registerView = loader.load();
-            Scene scene = new Scene(registerView);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/register-view.fxml")); // Zmieniono ścieżkę do właściwej
+            Parent registerView = fxmlLoader.load();
 
-            // Uzyskanie obecnego stage (okna) z dowolnego kontrolera
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(registerView));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Obsługa błędów ładowania widoku
         }
     }
 }
