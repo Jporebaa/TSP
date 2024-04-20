@@ -15,6 +15,11 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class RegisterController {
 
@@ -41,9 +46,7 @@ public class RegisterController {
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenAccept(languagesJson -> {
-                    // logowanie, aby sprawdzić odpowiedź JSON
                     System.out.println("Odpowiedź JSON z serwera: " + languagesJson);
-                    // Przetwarzamy JSON tylko
                     if (languagesJson != null && !languagesJson.isEmpty()) {
                         List<String> languageList = gson.fromJson(languagesJson, new TypeToken<List<String>>() {}.getType());
                         Platform.runLater(() -> languageComboBox.setItems(FXCollections.observableArrayList(languageList)));
@@ -52,11 +55,25 @@ public class RegisterController {
                     }
                 })
                 .exceptionally(e -> {
+                    e.printStackTrace(); // Dodano logowanie błędów
                     Platform.runLater(() -> showAlert("Network Error", "Nie można pobrać listy języków. Błąd: " + e.getMessage()));
                     return null;
                 });
     }
+    @FXML
+    private void handleCancelButtonAction(ActionEvent event) {
+        try {
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/login.fxml")); // Wstaw prawidłową ścieżkę do pliku login.fxml
+            Parent loginView = loader.load();
+
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(loginView));
+            stage.setTitle("Logowanie");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void handleRegisterButtonAction(ActionEvent event) {
         if (validateInput()) {
@@ -112,4 +129,5 @@ public class RegisterController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
 }
