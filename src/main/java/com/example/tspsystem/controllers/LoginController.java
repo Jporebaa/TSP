@@ -29,13 +29,50 @@ public class LoginController {
 
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
-        // Logowanie użytkownika
-    }
+        String username = usernameField.getText();
+        String password = passwordField.getText();
 
+        // Budowa obiektu JSON do wysłania
+        String jsonPayload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", username, password);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/users/login"))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                .header("Content-Type", "application/json")
+                .build();
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(response -> {
+                    if (response.contains("Użytkownik zalogowany")) {
+                        redirectToHome();
+                    } else {
+
+                        System.out.println("Błąd logowania: " + response);
+                    }
+                })
+                .exceptionally(e -> {
+
+                    e.printStackTrace();
+                    return null;
+                });
+    }
+    private void redirectToHome() {
+        try {
+            Parent homeView = FXMLLoader.load(getClass().getResource("/com/example/tspsystem/home.fxml"));
+            Scene homeScene = new Scene(homeView);
+            Stage window = (Stage) usernameField.getScene().getWindow();
+            window.setScene(homeScene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void handleRegisterButtonAction(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/register-view.fxml")); // Zmieniono ścieżkę do właściwej
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/register-view.fxml"));
             Parent registerView = fxmlLoader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

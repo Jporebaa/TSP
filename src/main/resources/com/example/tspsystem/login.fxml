@@ -43,8 +43,8 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField id="usernameField" layoutX="200.0" layoutY="173.0" prefHeight="40.0" prefWidth="338.0" promptText="Nazwa użytkownika" />
-            <PasswordField layoutX="200.0" layoutY="230.0" prefHeight="40.0" prefWidth="338.0" promptText="Hasło" />
+            <TextField fx:id="usernameField" layoutX="200.0" layoutY="173.0" prefHeight="40.0" prefWidth="338.0" promptText="Nazwa użytkownika" />
+            <PasswordField fx:id="passwordField" layoutX="200.0" layoutY="230.0" prefHeight="40.0" prefWidth="338.0" promptText="Hasło" />
             <ButtonBar layoutX="220.0" layoutY="319.0" prefHeight="40.0" prefWidth="200.0" />
             <Button onAction="#handleLoginButtonAction" layoutX="395.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Zaloguj" textFill="WHITE" />
             <Button fx:id="registerButton" onAction="#handleRegisterButtonAction" layoutX="568.0" layoutY="450.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Rejestracja" textFill="WHITE" />

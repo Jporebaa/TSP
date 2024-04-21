@@ -94,12 +94,13 @@ public class RegisterController {
     }
 
     private void sendRegistrationRequest() {
-        System.out.println("Sending registration request");
-
-        String json = String.format("{ \"login\": \"%s\", \"password\": \"%s\", \"language\": \"%s\" }",
+        RegistrationRequest registrationRequest = new RegistrationRequest(
                 usernameField.getText(),
                 passwordField.getText(),
-                languageComboBox.getValue());
+                languageComboBox.getValue()
+        );
+
+        String json = gson.toJson(registrationRequest);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/api/users/register"))
@@ -109,10 +110,16 @@ public class RegisterController {
 
         HttpClient client = HttpClient.newHttpClient();
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
+                .thenApply(response -> {
+                    if (response.statusCode() == 200) {
+                        return response.body();
+                    } else {
+                        throw new IllegalStateException("Błąd serwera: " + response.body());
+                    }
+                })
                 .thenAccept(this::handleResponse)
                 .exceptionally(e -> {
-                    Platform.runLater(() -> showAlert("Network Error", "Nie można połączyć się z serwerem."));
+                    Platform.runLater(() -> showAlert("Network Error", "Nie można połączyć się z serwerem: " + e.getMessage()));
                     return null;
                 });
     }
@@ -129,5 +136,15 @@ public class RegisterController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+    private static class RegistrationRequest {
+        private String login;
+        private String password;
+        private String language;
 
+        public RegistrationRequest(String login, String password, String language) {
+            this.login = login;
+            this.password = password;
+            this.language = language;
+        }
+    }
 }
