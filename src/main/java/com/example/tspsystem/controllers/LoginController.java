@@ -72,6 +72,7 @@ public class LoginController {
     @FXML
     private void handleRegisterButtonAction(ActionEvent event) {
         try {
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/register-view.fxml"));
             Parent registerView = fxmlLoader.load();
 
