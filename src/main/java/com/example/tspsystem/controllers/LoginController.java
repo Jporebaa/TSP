@@ -46,14 +46,14 @@ public class LoginController {
                 .thenApply(HttpResponse::body)
                 .thenAccept(response -> {
                     if (response.contains("Użytkownik zalogowany")) {
-                        redirectToHome();
+                        redirectToHome(); // Przekierowanie do widoku głównego.
                     } else {
-
+                        // Wyświetlenie komunikatu o błędzie logowania w konsoli.
                         System.out.println("Błąd logowania: " + response);
                     }
                 })
                 .exceptionally(e -> {
-
+                    // Wyświetlenie stosu wywołań błędu w konsoli, jeśli żądanie się nie powiedzie.
                     e.printStackTrace();
                     return null;
                 });

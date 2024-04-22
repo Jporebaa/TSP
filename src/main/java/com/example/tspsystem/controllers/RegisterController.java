@@ -46,7 +46,6 @@ public class RegisterController {
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenAccept(languagesJson -> {
-                    System.out.println("Odpowiedź JSON z serwera: " + languagesJson);
                     if (languagesJson != null && !languagesJson.isEmpty()) {
                         List<String> languageList = gson.fromJson(languagesJson, new TypeToken<List<String>>() {}.getType());
                         Platform.runLater(() -> languageComboBox.setItems(FXCollections.observableArrayList(languageList)));
@@ -55,25 +54,25 @@ public class RegisterController {
                     }
                 })
                 .exceptionally(e -> {
-                    e.printStackTrace(); // Dodano logowanie błędów
                     Platform.runLater(() -> showAlert("Network Error", "Nie można pobrać listy języków. Błąd: " + e.getMessage()));
                     return null;
                 });
     }
+
     @FXML
     private void handleCancelButtonAction(ActionEvent event) {
         try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/login.fxml")); // Wstaw prawidłową ścieżkę do pliku login.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/login.fxml")); // Poprawiona ścieżka do pliku login.fxml
             Parent loginView = loader.load();
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(loginView));
             stage.setTitle("Logowanie");
         } catch (IOException e) {
-            e.printStackTrace();
+            showAlert("Load Error", "Nie można załadować widoku logowania: " + e.getMessage());
         }
     }
+
     @FXML
     private void handleRegisterButtonAction(ActionEvent event) {
         if (validateInput()) {
@@ -82,10 +81,6 @@ public class RegisterController {
     }
 
     private boolean validateInput() {
-        System.out.println("Username: " + usernameField.getText());
-        System.out.println("Password: " + passwordField.getText());
-        System.out.println("Language: " + languageComboBox.getValue());
-
         if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty() || languageComboBox.getValue() == null) {
             showAlert("Błąd walidacji", "Proszę wypełnić wszystkie pola.");
             return false;
@@ -125,7 +120,6 @@ public class RegisterController {
     }
 
     private void handleResponse(String responseBody) {
-        System.out.println("Odpowiedź z serwera: " + responseBody);
         Platform.runLater(() -> showAlert("Odpowiedź z serwera", responseBody));
     }
 
@@ -136,6 +130,7 @@ public class RegisterController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
     private static class RegistrationRequest {
         private String login;
         private String password;
