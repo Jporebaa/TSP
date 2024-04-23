@@ -12,7 +12,9 @@ module com.example.tspsystem {
     requires com.almasb.fxgl.all;
     requires com.google.gson;
     requires com.fasterxml.jackson.databind;
-
+    requires spring.beans;
+    requires spring.web;
+    requires spring.context;
     opens com.example.tspsystem to javafx.fxml;
     exports com.example.tspsystem;
     exports com.example.tspsystem.controllers;
