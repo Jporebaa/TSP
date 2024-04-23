@@ -74,7 +74,7 @@
                     </children>
                 </AnchorPane>
                 <Circle fill="#ffffff00" layoutX="269.0" layoutY="229.0" radius="100.0" stroke="#f5f5f5" strokeType="INSIDE" />
-                <Label layoutX="241.0" layoutY="215.0" text="Witaj !" textFill="WHITE">
+                <Label layoutX="241.0" layoutY="215.0" text="Witaj !" textFill="#426580">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
