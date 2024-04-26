@@ -39,6 +39,14 @@
       <version>21</version>
     </dependency>
 
+    <!-- PostgreSQL JDBC Driver -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.3.6</version>
+    </dependency>
+
+
     <!-- ControlsFX UI Library -->
     <dependency>
       <groupId>org.controlsfx</groupId>

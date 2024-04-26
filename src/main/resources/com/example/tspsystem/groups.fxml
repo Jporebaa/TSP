@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
@@ -27,9 +26,10 @@
                <TableColumn fx:id="userNameColumn" prefWidth="299.0" text="Nazwa Użytkownika" />
             </columns>
          </TableView>
-         <HBox spacing="10">
+         <HBox alignment="CENTER" spacing="10">
             <Button onAction="#handleCreateGroup" text="Utwórz grupę" />
             <Button fx:id="removeSelectedUserButton" onAction="#handleRemoveSelectedUser" text="Usuń użytkownika z grupy" />
+            <Button fx:id="backButton" onAction="#handleBackAction" text="Wstecz" />
          </HBox>
       </VBox>
    </center>

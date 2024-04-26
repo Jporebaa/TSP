@@ -12,32 +12,36 @@
                 <children>
                     <Button layoutX="5.0" layoutY="14.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="196.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="System Bold" size="18.0" />
                         </font>
                     </Button>
-                    <Circle fill="#908a8a" layoutX="45.0" layoutY="51.0" radius="30.0"/>
+                    <Circle fill="#908a8a" layoutX="45.0" layoutY="51.0" radius="30.0" />
                     <ImageView fitHeight="40.0" fitWidth="47.0" layoutX="21.0" layoutY="31.0">
-                        <image><Image url="@../icon/avatar.png"/></image>
+                        <image>
+                            <Image url="@../icon/avatar.png" />
+                        </image>
                     </ImageView>
-                    <Circle fill="#908a8a" layoutX="100.0" layoutY="195.0" radius="39.0"/>
+                    <Circle fill="#908a8a" layoutX="100.0" layoutY="195.0" radius="39.0" />
                     <ImageView fitHeight="62.0" fitWidth="69.0" layoutX="66.0" layoutY="164.0">
-                        <image><Image url="@../icon/micro.png"/></image>
+                        <image>
+                            <Image url="@../icon/micro.png" />
+                        </image>
                     </ImageView>
-                    <Button layoutX="38.0" layoutY="542.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE"/>
+                    <Button layoutX="38.0" layoutY="542.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
                 </children>
             </AnchorPane>
         </VBox>
     </left>
     <center>
-        <VBox fx:id="mainContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  alignment="CENTER" spacing="10" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
+        <VBox fx:id="mainContainer" alignment="CENTER" spacing="10" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
             <ListView fx:id="messageDisplay" VBox.vgrow="ALWAYS" prefHeight="500.0" prefWidth="400.0" />
             <TextArea fx:id="messageInput" VBox.vgrow="NEVER" prefHeight="50.0" prefWidth="400.0" />
-            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" text="Wyślij" style="-fx-background-color: #3498DB;" textFill="WHITE"/>
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" text="Wyślij" style="-fx-background-color: #3498DB;" textFill="WHITE" />
         </VBox>
     </center>
-    <right>
-        <VBox prefWidth="200.0" style="-fx-background-color: #BDC3C7;">
-            <ListView fx:id="userList" VBox.vgrow="ALWAYS"/>
-        </VBox>
-    </right>
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #ECF0F1;">
+            <Button text="Wstecz" onAction="#goBack" style="-fx-background-color: #3498DB;" textFill="WHITE" HBox.hgrow="ALWAYS" />
+        </HBox>
+    </bottom>
 </BorderPane>
