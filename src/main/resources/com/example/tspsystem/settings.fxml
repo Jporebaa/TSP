@@ -47,16 +47,12 @@
         <AnchorPane accessibleHelp="s" accessibleRoleDescription="d" accessibleText="s" prefHeight="500.0" prefWidth="758.0" BorderPane.alignment="CENTER">
             <children>
                 <ButtonBar layoutX="220.0" layoutY="319.0" prefHeight="40.0" prefWidth="200.0" />
-                <Label layoutX="49.0" layoutY="55.0" text="Wybierz język" textFill="WHITE">
+                <Label layoutX="49.0" layoutY="55.0" text="Wybierz język" textFill="BLUE">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
             <MenuButton layoutX="42.0" layoutY="90.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="134.0" text="Język polski ">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
             </MenuButton>
             </children>
         </AnchorPane>

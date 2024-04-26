@@ -4,50 +4,57 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane fx:controller="com.example.tspsystem.controllers.HomeController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tspsystem.controllers.HomeController">
     <left>
-        <AnchorPane prefHeight="501.0" prefWidth="169.0" style="-fx-background-color: #263F73;">
-
-
+        <AnchorPane prefHeight="500.0" prefWidth="169.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="119.0" layoutY="468.0" textFill="#fcfafa" />
-                <Line endX="119.33332824707031" endY="7.62939453125E-6" layoutX="100.0" layoutY="73.0" startX="-100.0" stroke="WHITE" />
                 <Circle fill="#ffffff00" layoutX="99.0" layoutY="240.0" radius="100.0" stroke="#f5f5f5" strokeType="INSIDE" />
                 <Label layoutX="68.0" layoutY="228.0" prefHeight="23.0" prefWidth="84.0" text="TSP SYSTEM" textFill="#fcfafa">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Label>
-
-                <Button layoutX="-1.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="221.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE">
-                    <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
-                        <image><Image url="@../icon/avatar.png"/></image>
-                    </ImageView>
-                </Button>
-                <Button onAction="#handleLogoutButtonAction" layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
-                <ImageView onMouseClicked="#handleGroupsButtonAction" fitHeight="31.0" fitWidth="56.0" layoutX="164.0" layoutY="456.0">
+                <Button layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
+                <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
                     <image>
-                        <Image url="@../icon/plus.png" />
-                    </image>
-                </ImageView>
-                <ImageView onMouseClicked="#handleSettingsButtonAction" fitHeight="33.0" fitWidth="43.0" layoutX="177.0" layoutY="6.0">
-                    <image>
-                        <Image url="@../icon/Kolo.png" />
+                        <Image url="@../icon/avatar.png" />
                     </image>
                 </ImageView>
             </children>
         </AnchorPane>
     </left>
     <center>
-        <Text text="WITAJ" style="-fx-font-size: 24; -fx-font-weight: bold;" fill="#2C3E50" />
+        <AnchorPane prefHeight="500.0" prefWidth="758.0" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane layoutX="557.0" prefHeight="501.0" prefWidth="246.0" style="-fx-background-color: #263F73;">
+                    <children>
+                        <ListView fx:id="userList" layoutY="0.0" prefHeight="250.0" prefWidth="246.0">
+                            <!-- Items will be bound to user list in controller -->
+                        </ListView>
+                        <ListView fx:id="groupList" layoutY="250.0" prefHeight="120.0" prefWidth="246.0">
+                            <!-- Items will be bound to group list in controller -->
+                        </ListView>
+                        <Button fx:id="plusButton" onAction="#handlePlusButtonAction" layoutY="370.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="246.0" style="-fx-background-color: #263F73; text-fill: white;">
+                            <graphic>
+                                <ImageView fitHeight="31.0" fitWidth="56.0">
+                                    <image>
+                                        <Image url="@../icon/plus.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <text>More Options</text>
+                        </Button>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="241.0" layoutY="215.0" text="Witaj !" textFill="#426580">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
     </center>
-    <right>
-        <VBox prefWidth="200.0" style="-fx-background-color: #BDC3C7;">
-            <ListView fx:id="groupsList" onMouseClicked="#handleChatButtonAction" VBox.vgrow="ALWAYS"/>
-        </VBox>
-    </right>
 </BorderPane>
