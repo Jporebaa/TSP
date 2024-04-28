@@ -6,8 +6,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-
+import java.io.IOException;
 public class HomeController {
+
+    @FXML
+    private void handleSettingsButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/settings.fxml"));
+            Parent settingsView = fxmlLoader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(settingsView));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void handlePlusButtonAction(ActionEvent event) {

@@ -29,11 +29,15 @@
                         <Image url="@../icon/avatar.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="33.0" fitWidth="43.0" layoutX="177.0" layoutY="6.0">
-                    <image>
-                        <Image url="@../icon/Kolo.png" />
-                    </image>
-                </ImageView>
+                <Button layoutX="180.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleSettingsButtonAction" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="40.0">
+                            <image>
+                                <Image url="@../icon/Kolo.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
             </children>
         </AnchorPane>
     </left>

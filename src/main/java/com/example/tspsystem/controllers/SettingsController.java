@@ -6,6 +6,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -15,10 +17,15 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+
 @Component
 public class SettingsController implements Initializable {
+    @FXML
+    private ComboBox<String> languageComboBox;
+    @FXML
+    private Button saveChangesButton;
 
-    public ComboBox<String> languageComboBox;
     private static final String SERVER_URL = "http://localhost:8080/api/languages/names";
     private final Gson gson = new Gson();
 
@@ -27,13 +34,49 @@ public class SettingsController implements Initializable {
         fetchLanguages();
     }
 
+    @FXML
+    public void handleSaveChangesAction() {
+
+        Long selectedLanguageId = 1L;
+        Long userId = 1L;
+
+        if(selectedLanguageId == null || userId == null) {
+            showAlert("Error", "Wybierz język lub błąd ID użytkownika.");
+            return;
+        }
+
+        sendLanguageUpdateRequest(userId, selectedLanguageId);
+    }
+
+    private void sendLanguageUpdateRequest(Long userId, Long languageId) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/users/" + userId + "/language"))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(languageId.toString()))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(response -> {
+                    if (response.statusCode() == 200) {
+                        Platform.runLater(() -> showAlert("Success", "Język został zaktualizowany."));
+                    } else {
+                        Platform.runLater(() -> showAlert("Error", "Nie udało się zaktualizować języka."));
+                    }
+                })
+                .exceptionally(e -> {
+                    Platform.runLater(() -> showAlert("Error", "Błąd komunikacji z serwerem: " + e.getMessage()));
+                    return null;
+                });
+    }
+
     private void fetchLanguages() {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SERVER_URL))
                 .GET()
                 .build();
-        HttpClient client = HttpClient.newHttpClient();
 
+        HttpClient client = HttpClient.newHttpClient();
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenAccept(languagesJson -> {
@@ -49,8 +92,34 @@ public class SettingsController implements Initializable {
                     return null;
                 });
     }
+    private void getSelectedLanguageId(String selectedLanguage, Consumer<Long> languageIdConsumer) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "http://localhost:8080/api/languages/names" + selectedLanguage))
+                .GET()
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(languageIdJson -> {
+                    Long languageId = gson.fromJson(languageIdJson, Long.class);
+                    Platform.runLater(() -> languageIdConsumer.accept(languageId));
+                })
+                .exceptionally(e -> {
+                    Platform.runLater(() -> showAlert("Error", "Błąd podczas pobierania ID języka: " + e.getMessage()));
+                    return null;
+                });
+    }
+
+
+
+
 
     private void showAlert(String title, String message) {
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
