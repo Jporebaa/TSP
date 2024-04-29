@@ -18,7 +18,11 @@ import java.util.List;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-
+import java.util.function.Consumer;
+import java.nio.charset.StandardCharsets;
+import java.net.URLEncoder;
+import com.example.tspsystem.controllers.LoginController.SessionManager;
+import com.example.tspsystem.controllers.LoginController.UserSession;
 @Component
 public class SettingsController implements Initializable {
     @FXML
@@ -26,7 +30,7 @@ public class SettingsController implements Initializable {
     @FXML
     private Button saveChangesButton;
 
-    private static final String SERVER_URL = "http://localhost:8080/api/languages/names";
+    private static final String BASE_SERVER_URL = "http://localhost:8080/api";
     private final Gson gson = new Gson();
 
     @Override
@@ -34,25 +38,40 @@ public class SettingsController implements Initializable {
         fetchLanguages();
     }
 
+    private Long getCurrentUserId() {
+        UserSession currentSession = LoginController.SessionManager.getCurrentUserSession();
+        if (currentSession != null) {
+            return currentSession.getUserId().longValue();
+        } else {
+            return null;
+        }
+    }
     @FXML
     public void handleSaveChangesAction() {
-
-        Long selectedLanguageId = 1L;
-        Long userId = 1L;
-
-        if(selectedLanguageId == null || userId == null) {
-            showAlert("Error", "Wybierz język lub błąd ID użytkownika.");
+        String selectedLanguage = languageComboBox.getValue();
+        if (selectedLanguage == null) {
+            showAlert("Error", "Wybierz język.");
             return;
         }
 
-        sendLanguageUpdateRequest(userId, selectedLanguageId);
+        getSelectedLanguageId(selectedLanguage, selectedLanguageId -> {
+            Long userId = getCurrentUserId(); // Pobierz ID zalogowanego użytkownika
+            if (userId != null) {
+                sendLanguageUpdateRequest(userId, selectedLanguageId);
+            } else {
+
+                showAlert("Error", "Błąd ID użytkownika. Upewnij się, że jesteś zalogowany.");
+            }
+        });
     }
 
     private void sendLanguageUpdateRequest(Long userId, Long languageId) {
+        String jsonPayload = gson.toJson(new LanguageUpdateRequest(languageId));
+
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER_URL + "/users/" + userId + "/language"))
+                .uri(URI.create(BASE_SERVER_URL + "/languages/users/" + userId + "/language"))
                 .header("Content-Type", "application/json")
-                .PUT(HttpRequest.BodyPublishers.ofString(languageId.toString()))
+                .PUT(HttpRequest.BodyPublishers.ofString(jsonPayload))
                 .build();
 
         HttpClient client = HttpClient.newHttpClient();
@@ -69,10 +88,16 @@ public class SettingsController implements Initializable {
                     return null;
                 });
     }
+    private static class LanguageUpdateRequest {
+        private final Long languageId;
 
+        public LanguageUpdateRequest(Long languageId) {
+            this.languageId = languageId;
+        }
+    }
     private void fetchLanguages() {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER_URL))
+                .uri(URI.create(BASE_SERVER_URL + "/languages/names"))
                 .GET()
                 .build();
 
@@ -94,7 +119,7 @@ public class SettingsController implements Initializable {
     }
     private void getSelectedLanguageId(String selectedLanguage, Consumer<Long> languageIdConsumer) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER_URL + "http://localhost:8080/api/languages/names" + selectedLanguage))
+                .uri(URI.create(BASE_SERVER_URL + "/languages/names/id?name=" + URLEncoder.encode(selectedLanguage, StandardCharsets.UTF_8)))
                 .GET()
                 .build();
 
@@ -110,10 +135,6 @@ public class SettingsController implements Initializable {
                     return null;
                 });
     }
-
-
-
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

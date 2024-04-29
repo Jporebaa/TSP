@@ -28,7 +28,7 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    private static class SessionManager {
+    public static class SessionManager {
         private static UserSession currentUserSession;
 
         public static UserSession getCurrentUserSession() {
