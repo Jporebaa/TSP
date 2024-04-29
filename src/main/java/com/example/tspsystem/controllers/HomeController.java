@@ -37,7 +37,7 @@ public class HomeController {
     private void loadUserData() {
         String url = "jdbc:postgresql://localhost:5432/TSP";
         String user = "postgres";
-        String password = "jesthaslo123";
+        String password = "12345";
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
             Statement stmt = conn.createStatement();
@@ -59,7 +59,7 @@ public class HomeController {
     private void loadGroupData() {
         String url = "jdbc:postgresql://localhost:5432/TSP";
         String user = "postgres";
-        String password = "jesthaslo123";
+        String password = "12345";
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
             Statement stmt = conn.createStatement();

@@ -57,7 +57,7 @@ public class GroupsController {
     private void loadAllUsersData() {
         String url = "jdbc:postgresql://localhost:5432/TSP";
         String dbUser = "postgres"; // Twoja nazwa użytkownika bazy danych
-        String dbPassword = "jesthaslo123"; // Twoje hasło bazy danych
+        String dbPassword = "12345"; // Twoje hasło bazy danych
         try {
             Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
             Statement stmt = conn.createStatement();

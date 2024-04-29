@@ -89,6 +89,19 @@
       <version>17.3</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.java-websocket</groupId>
+      <artifactId>Java-WebSocket</artifactId>
+      <version>1.5.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+
+
     <!-- Gson for JSON handling -->
     <dependency>
       <groupId>com.google.code.gson</groupId>

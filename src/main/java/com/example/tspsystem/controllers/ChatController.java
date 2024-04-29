@@ -9,13 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import org.java_websocket.client.WebSocketClient;
+import java.net.URI;
+
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class ChatController {
 
@@ -31,13 +34,19 @@ public class ChatController {
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     private String userName; // Przechowuje nazwę użytkownika czatu
+    private WebSocketClient webSocketClient;
 
     @FXML
     private void initialize() {
-        // Inicjalizacja, jeśli potrzebna
-        // Ustawienie akcji dla przycisku wysyłania
+        try {
+            webSocketClient = new ChatWebSocketClient(new URI("ws://localhost:8080/ws"));
+            webSocketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         sendButton.setOnAction(e -> sendMessage());
     }
+
 
     public void initData(String userName) {
         this.userName = userName;
@@ -47,11 +56,20 @@ public class ChatController {
         // Możliwość załadowania historii czatu z serwera
     }
 
+    private void connectWebSocket() {
+        try {
+            webSocketClient = new ChatWebSocketClient(new URI("ws://localhost:8080/ws"));
+            webSocketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void sendMessage() {
         String message = messageInput.getText().trim();
-        if (!message.isEmpty()) {
-            sendToServer(message); // Wysyłanie wiadomości do serwera
+        if (!message.isEmpty() && webSocketClient != null && webSocketClient.isOpen()) {
+            webSocketClient.send(message); // Wysyłanie wiadomości przez WebSocket
             messageDisplay.getItems().add("Ja: " + message); // Dodanie wiadomości do UI
             messageInput.clear(); // Czyszczenie pola wprowadzania
         }
