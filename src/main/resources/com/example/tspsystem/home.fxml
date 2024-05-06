@@ -31,10 +31,7 @@
             <children>
                 <AnchorPane layoutX="557.0" prefHeight="501.0" prefWidth="246.0" style="-fx-background-color: #263F73;">
                     <children>
-                        <ListView fx:id="userList" layoutY="0.0" prefHeight="250.0" prefWidth="246.0">
-                            <!-- Items will be bound to user list in controller -->
-                        </ListView>
-                        <ListView fx:id="groupList" layoutY="250.0" prefHeight="120.0" prefWidth="246.0">
+                        <ListView fx:id="groupList" layoutY="0.0" prefHeight="370.0" prefWidth="246.0">
                             <!-- Items will be bound to group list in controller -->
                         </ListView>
                         <Button fx:id="plusButton" onAction="#handlePlusButtonAction" layoutY="370.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="246.0" style="-fx-background-color: #263F73; text-fill: white;">
