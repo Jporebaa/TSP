@@ -19,4 +19,6 @@ module com.example.tspsystem {
     exports com.example.tspsystem;
     exports com.example.tspsystem.controllers;
     opens com.example.tspsystem.controllers to javafx.fxml, com.google.gson;
+    opens com.example.tspsystem.model to com.fasterxml.jackson.databind;
+    exports com.example.tspsystem.model;
 }
