@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.net.URI;
@@ -91,6 +92,7 @@ public class HomeController {
                     return null;
                 });
     }
+
 
 
     private List<String> parseGroups(String jsonResponse) {
