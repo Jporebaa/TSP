@@ -28,9 +28,14 @@
             </columns>
          </TableView>
          <HBox spacing="10">
-            <Button onAction="#handleCreateGroup" text="Utwórz grupę" />
+            <Button text="Utwórz grupę" onAction="#handleCreateGroup" />
             <Button fx:id="removeSelectedUserButton" onAction="#handleRemoveSelectedUser" text="Usuń użytkownika z grupy" />
          </HBox>
       </VBox>
    </center>
+   <bottom>
+      <HBox alignment="center" spacing="10" style="-fx-padding: 10;">
+         <Button onAction="#handleHomeButtonAction" text="Cofnij" />
+      </HBox>
+   </bottom>
 </BorderPane>

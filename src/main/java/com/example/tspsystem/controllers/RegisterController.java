@@ -1,5 +1,6 @@
 package com.example.tspsystem.controllers;
 
+
 import javafx.collections.FXCollections;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -141,5 +142,6 @@ public class RegisterController {
             this.password = password;
             this.language = language;
         }
+
     }
 }

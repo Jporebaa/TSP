@@ -1,5 +1,6 @@
 package com.example.tspsystem.controllers;
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
@@ -144,3 +145,4 @@ public class SettingsController implements Initializable {
         alert.showAndWait();
     }
 }
+
