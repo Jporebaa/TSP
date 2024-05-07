@@ -10,7 +10,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
 import org.springframework.stereotype.Component;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -118,6 +122,23 @@ public class SettingsController implements Initializable {
                     return null;
                 });
     }
+
+    @FXML
+    private void handleBackAction() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/home.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) saveChangesButton.getScene().getWindow(); // Uzyskaj scenę z aktualnego przycisku
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Nie można załadować widoku głównego.");
+        }
+    }
+
+
     private void getSelectedLanguageId(String selectedLanguage, Consumer<Long> languageIdConsumer) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_SERVER_URL + "/languages/names/id?name=" + URLEncoder.encode(selectedLanguage, StandardCharsets.UTF_8)))

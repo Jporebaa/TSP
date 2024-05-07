@@ -6,6 +6,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -22,7 +24,7 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <Button layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" />
+                <Button layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" fx:id="logoutButton" onAction="#handleLogoutAction" />
                 <Button layoutX="-1.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="221.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE" />
                 <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
                     <image>
@@ -45,39 +47,6 @@
         <AnchorPane prefHeight="500.0" prefWidth="758.0" BorderPane.alignment="CENTER">
             <children>
                 <ButtonBar layoutX="220.0" layoutY="319.0" prefHeight="40.0" prefWidth="200.0" />
-                <AnchorPane layoutX="557.0" prefHeight="501.0" prefWidth="246.0" style="-fx-background-color: #263F73;">
-                    <children>
-                        <Label layoutX="119.0" layoutY="468.0" textFill="#fcfafa" />
-                        <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Michał" textFill="WHITE" />
-                        <Button layoutY="46.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="247.0" style="-fx-background-color: #263F73;" text="Grupa 1 " textFill="WHITE" />
-                        <Button fx:id="plusButton" onAction="#handlePlusButtonAction" text="+"
-                                layoutX="190.0" layoutY="451.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="56.0" style="-fx-background-color: transparent;">
-                            <graphic>
-                                <ImageView fitHeight="31.0" fitWidth="56.0">
-                                    <image>
-                                        <Image url="@../icon/plus.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="14.0" layoutY="9.0">
-                            <image>
-                                <Image url="@../icon/avatar.png" />
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="13.0" layoutY="55.0">
-                            <image>
-                                <Image url="@../icon/avatar.png" />
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="23.0" fitWidth="26.0" layoutX="33.0" layoutY="49.0">
-                            <image>
-                                <Image url="@../icon/avatar.png" />
-                            </image>
-                        </ImageView>
-                    </children>
-                </AnchorPane>
-                <Circle fill="#ffffff00" layoutX="269.0" layoutY="229.0" radius="100.0" stroke="#f5f5f5" strokeType="INSIDE" />
                 <Label layoutX="241.0" layoutY="215.0" text="Witaj !" textFill="#426580">
                     <font>
                         <Font name="System Bold" size="18.0" />
@@ -86,4 +55,17 @@
             </children>
         </AnchorPane>
     </center>
+    <right>
+        <VBox prefWidth="200.0" style="-fx-padding: 10;">
+            <ListView fx:id="groupsListView" prefHeight="500.0">
+                <cellFactory>
+                    <Callback type="javafx.util.Callback">
+                        <cell value="{cellFactory}">
+                            <Text text="{name}"/>
+                        </cell>
+                    </Callback>
+                </cellFactory>
+            </ListView>
+        </VBox>
+    </right>
 </BorderPane>
