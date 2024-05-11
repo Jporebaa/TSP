@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
@@ -31,6 +32,7 @@ public class HomeController {
         loadGroupData();
         groupListView.setItems(groupList);
         groupListView.setOnMouseClicked(this::handleGroupClick);
+        updateUserButton("Nazwa Uzytkownika");
     }
 
     @FXML
@@ -51,14 +53,14 @@ public class HomeController {
             ChatController chatController = loader.getController();
             chatController.initializeWithGroup(selectedGroup);  // This method should set the group in the ChatController
 
-            Stage chatWindow = new Stage();
-            chatWindow.setTitle("Chat - " + selectedGroup.getName());
-            chatWindow.setScene(new Scene(chatView));
-            chatWindow.show();
+            // Uzyskanie dostępu do głównej sceny, zakładając, że 'mainStage' to referencja do głównego okna
+            Stage mainStage = (Stage) groupListView.getScene().getWindow();
+            mainStage.getScene().setRoot(chatView);  // Ustawienie nowego widoku jako głównego
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private void loadGroupData() {
         String url = "jdbc:postgresql://localhost:5432/TSP";
@@ -79,6 +81,14 @@ public class HomeController {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private Button userButton;
+
+
+    public void updateUserButton(String userName) {
+        userButton.setText(userName);
     }
 
     @FXML

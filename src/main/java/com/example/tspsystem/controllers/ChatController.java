@@ -1,15 +1,20 @@
 package com.example.tspsystem.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ListView;
+
+import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import com.example.tspsystem.model.ChatGroup;
+import javafx.stage.Stage;
 
 public class ChatController {
 
@@ -51,6 +56,18 @@ public class ChatController {
     @FXML
     private void loadChatHistory() {
         // Tutaj możesz dodać logikę do ładowania historii czatu dla grupy
+    }
+
+    @FXML
+    private void handleBackButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/home.fxml"));
+            Parent homeView = loader.load();
+            Stage stage = (Stage) sendButton.getScene().getWindow();
+            stage.getScene().setRoot(homeView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

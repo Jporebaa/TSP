@@ -8,34 +8,25 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tspsystem.controllers.HomeController">
     <left>
-        <AnchorPane prefHeight="501.0" prefWidth="169.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="500.0" prefWidth="304.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="119.0" layoutY="468.0" textFill="#fcfafa" />
-                <Line endX="119.33332824707031" endY="7.62939453125E-6" layoutX="100.0" layoutY="73.0" startX="-100.0" stroke="WHITE" />
-                <Circle fill="#ffffff00" layoutX="99.0" layoutY="240.0" radius="100.0" stroke="#f5f5f5" strokeType="INSIDE" />
-                <Label layoutX="68.0" layoutY="228.0" prefHeight="23.0" prefWidth="84.0" text="TSP SYSTEM" textFill="#fcfafa">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Label>
-                <Button layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #263F73;" text="Wyloguj się" textFill="WHITE" fx:id="logoutButton" onAction="#handleLogoutAction" />
-                <Button layoutX="-1.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="221.0" style="-fx-background-color: #263F73;" text="Kuba" textFill="WHITE" />
-                <ImageView fitHeight="43.0" fitWidth="46.0" layoutX="14.0" layoutY="21.0">
-                    <image>
-                        <Image url="@../icon/avatar.png" />
-                    </image>
-                </ImageView>
-                <Button layoutX="180.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleSettingsButtonAction" style="-fx-background-color: transparent;">
+                    <Label layoutX="119.0" layoutY="469.0" text="TSP SYSTEM" textFill="#fcfafa" />
+                    <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="7.0" layoutY="90.0">
+                        <image>
+                            <Image url="@../icon/logo1.png" />
+                        </image>
+                    </ImageView>
+                <Button layoutX="47.0" layoutY="453.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" maxHeight="50.0" style="-fx-background-color: #3498DB; -fx-text-fill: white;" text="Wyloguj się" fx:id="logoutButton" onAction="#handleLogoutAction" />
+                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="280.0" style="-fx-background-color: #263F73; -fx-text-fill: white;" text="Nazwa użytkownika" fx:id="userButton" onAction="#handleSettingsButtonAction">
                     <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="40.0">
+                        <ImageView fitHeight="43.0" fitWidth="46.0">
                             <image>
-                                <Image url="@../icon/Kolo.png" />
+                                <Image url="@../icon/avatar.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -44,23 +35,18 @@
         </AnchorPane>
     </left>
     <center>
-        <AnchorPane prefHeight="500.0" prefWidth="758.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="500.0" prefWidth="758.0">
             <children>
                 <ButtonBar layoutX="220.0" layoutY="319.0" prefHeight="40.0" prefWidth="200.0" />
-                <Label layoutX="241.0" layoutY="215.0" text="Witaj !" textFill="#426580">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
+                <Label layoutX="220.0" layoutY="215.0" text="Rozpocznij czat !" textFill="#426580" style="-fx-font-size: 18px; -fx-font-weight: bold;">
                 </Label>
             </children>
         </AnchorPane>
     </center>
     <right>
-        <VBox prefWidth="200.0" style="-fx-padding: 10;">
-            <ListView fx:id="groupListView" onMouseClicked="#handleGroupClick" prefHeight="450.0" prefWidth="200.0"/>
-            <Button text="Utwórz grupę" fx:id="createGroupButton" onAction="#handlePlusButtonAction" prefWidth="200.0" maxHeight="50.0" VBox.vgrow="NEVER"/>
+        <VBox prefWidth="200.0" style="-fx-padding: 10; -fx-background-color: #263F73;">
+            <ListView fx:id="groupListView" onMouseClicked="#handleGroupClick" prefHeight="450.0" prefWidth="200.0" style="-fx-background-color: #34495E; -fx-border-color: #1C2833; -fx-control-inner-background: #E0E0E0; -fx-text-fill: white;"/>
+            <Button text="Utwórz grupę" fx:id="createGroupButton" onAction="#handlePlusButtonAction" prefWidth="200.0" maxHeight="50.0" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-weight: bold;"/>
         </VBox>
     </right>
-
-
 </BorderPane>
