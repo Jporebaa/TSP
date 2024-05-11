@@ -4,10 +4,17 @@ public class ChatGroup {
     private int id;
     private String name;
 
+    // No-argument constructor
     public ChatGroup() {
     }
 
-    // Gettery i settery
+    // Constructor that takes an ID and a name
+    public ChatGroup(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -22,5 +29,10 @@ public class ChatGroup {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name; // This will help in displaying the name in ListView
     }
 }

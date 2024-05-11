@@ -57,15 +57,10 @@
     </center>
     <right>
         <VBox prefWidth="200.0" style="-fx-padding: 10;">
-            <ListView fx:id="groupsListView" prefHeight="500.0">
-                <cellFactory>
-                    <Callback type="javafx.util.Callback">
-                        <cell value="{cellFactory}">
-                            <Text text="{name}"/>
-                        </cell>
-                    </Callback>
-                </cellFactory>
-            </ListView>
+            <ListView fx:id="groupListView" onMouseClicked="#handleGroupClick" prefHeight="450.0" prefWidth="200.0"/>
+            <Button text="Utwórz grupę" fx:id="createGroupButton" onAction="#handlePlusButtonAction" prefWidth="200.0" maxHeight="50.0" VBox.vgrow="NEVER"/>
         </VBox>
     </right>
+
+
 </BorderPane>

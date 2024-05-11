@@ -1,6 +1,5 @@
 package com.example.tspsystem.controllers;
 
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -10,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-
+import com.example.tspsystem.model.ChatGroup;
 
 public class ChatController {
 
@@ -27,48 +26,57 @@ public class ChatController {
     private Button sendButton;
 
     @FXML
+    private ChatGroup currentGroup; // Zmienna przechowująca aktualną grupę czatu
+
+    @FXML
     private void initialize() {
-        // Inicjalizacja, jeśli potrzebna
+        // Możesz zaimplementować logikę inicjalizacji ogólnej, jeśli potrzebna
+    }
+
+   @FXML
+    public void initializeWithGroup(ChatGroup group) {
+        this.currentGroup = group;
+        updateChatTitle();
+        loadChatHistory();
+    }
+
+    @FXML
+    private void updateChatTitle() {
+        // Możesz zaktualizować tytuł czatu na pasku aplikacji, jeśli jest taka potrzeba
+        if (messageInput != null) {
+            messageInput.setPromptText("Napisz wiadomość do: " + currentGroup.getName());
+        }
+    }
+
+    @FXML
+    private void loadChatHistory() {
+        // Tutaj możesz dodać logikę do ładowania historii czatu dla grupy
     }
 
     @FXML
     private void sendMessage() {
-        // Pobranie wiadomości z pola tekstowego
         String message = messageInput.getText().trim();
-
         if (!message.isEmpty()) {
-            // Tutaj można zaimplementować logikę wysyłania wiadomości do serwera
-            System.out.println("Wiadomość do wysłania: " + message);
-
-            // Dodanie wiadomości do listy w interfejsie użytkownika
-            messageDisplay.getItems().add(message);
-
-            // Wyczyszczenie pola tekstowego
+            sendToServer(message);
+            messageDisplay.getItems().add(message); // Można dodać użytkownika i czas do wyświetlanej wiadomości
             messageInput.clear();
         }
     }
 
-
     private void sendToServer(String message) {
         try {
-            // Zakładamy, że serwer oczekuje JSON-a, więc konstruujemy proste ciało JSON
-            String jsonPayload = "{\"message\":\"" + message.replace("\"", "\\\"") + "\"}";
-
+            String jsonPayload = "{\"group_id\": " + currentGroup.getId() + ", \"message\":\"" + message.replace("\"", "\\\"") + "\"}";
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:5432/api/messages")) // Adres URL serwera
+                    .uri(URI.create("http://localhost:8080/api/messages")) // Upewnij się, że to jest właściwy endpoint
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonPayload, StandardCharsets.UTF_8))
                     .build();
 
-            // Asynchroniczne wysyłanie wiadomości do serwera
             httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenApply(HttpResponse::body)
                     .thenAccept(responseBody -> {
-                        // Logika po otrzymaniu odpowiedzi
                         System.out.println("Odpowiedź serwera: " + responseBody);
                     });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
