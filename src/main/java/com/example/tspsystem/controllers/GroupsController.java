@@ -22,7 +22,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,30 +60,28 @@ public class GroupsController {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(item == null ? null : item.getName());
+                setText(item == null ? null : item.getLogin());
             }
         });
 
-        fetchAllUsers();  // Pobierz listę użytkowników
+        fetchAllUsers();  // Fetch the list of users
         comboBoxUsers.setCellFactory(lv -> new ListCell<User>() {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(item == null ? null : item.getName());
+                setText(item == null ? null : item.getLogin());
             }
         });
         comboBoxUsers.setButtonCell(new ListCell<User>() {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(item == null ? null : item.getName());
+                setText(item == null ? null : item.getLogin());
             }
         });
 
-        userNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        usersTableView.setItems(FXCollections.observableArrayList(selectedUsers));
-        usersTableView.getColumns().clear(); // Wyczyść istniejące kolumny
-        usersTableView.getColumns().add(userNameColumn); // Dodaj kolumnę z nazwami użytkowników
+        userNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLogin()));
+        usersTableView.setItems(selectedUsers); // Directly bind the selectedUsers list
     }
 
     @FXML
@@ -100,10 +97,11 @@ public class GroupsController {
                 .collect(Collectors.toList());
         String groupName = textFieldGroupName.getText();
 
-        // Tworzenie obiektu JSON do wysłania
-        Map<String, Object> groupInfo = new HashMap<>();
-        groupInfo.put("groupName", groupName);
-        groupInfo.put("userIds", userIds);
+        // Create a JSON object to send
+        Map<String, Object> groupInfo = Map.of(
+                "groupName", groupName,
+                "userIds", userIds
+        );
 
         String json = "";
         try {
@@ -150,14 +148,17 @@ public class GroupsController {
 
     private void parseUsers(String jsonResponse) {
         try {
+            System.out.println("Response: " + jsonResponse); // Log the response
             JsonNode rootNode = objectMapper.readTree(jsonResponse);
             if (rootNode.has("error")) {
-                System.err.println("Błąd podczas pobierania użytkowników: " + rootNode.get("error").asText());
+                Platform.runLater(() -> System.err.println("Błąd podczas pobierania użytkowników: " + rootNode.get("error").asText()));
                 return;
             }
             List<User> users = objectMapper.readValue(jsonResponse, new TypeReference<List<User>>() {});
-            allUsers.setAll(users);
-            Platform.runLater(() -> comboBoxUsers.setItems(FXCollections.observableArrayList(allUsers)));
+            Platform.runLater(() -> {
+                allUsers.setAll(users);
+                comboBoxUsers.setItems(allUsers);
+            });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -166,10 +167,9 @@ public class GroupsController {
     @FXML
     private void onAddUser() {
         User selectedUser = comboBoxUsers.getSelectionModel().getSelectedItem();
-        if (selectedUser != null && !selectedUsers.stream().anyMatch(u -> u.getName().equals(selectedUser.getName()))) {
+        if (selectedUser != null && !selectedUsers.contains(selectedUser)) {
             selectedUsers.add(selectedUser);
             allUsers.remove(selectedUser);
-            comboBoxUsers.setItems(FXCollections.observableArrayList(allUsers));
         }
     }
 
@@ -179,13 +179,12 @@ public class GroupsController {
         if (selectedUser != null) {
             selectedUsers.remove(selectedUser);
             allUsers.add(selectedUser);
-            comboBoxUsers.setItems(FXCollections.observableArrayList(allUsers));
             handleShowSelectedUsers();
         }
     }
 
     @FXML
     private void handleShowSelectedUsers() {
-        usersTableView.setItems(FXCollections.observableArrayList(selectedUsers));
+        usersTableView.refresh();
     }
 }
