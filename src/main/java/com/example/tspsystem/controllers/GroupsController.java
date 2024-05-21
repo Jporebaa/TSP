@@ -64,7 +64,7 @@ public class GroupsController {
             }
         });
 
-        fetchAllUsers();  // Fetch the list of users
+        fetchAllUsers();
         comboBoxUsers.setCellFactory(lv -> new ListCell<User>() {
             @Override
             protected void updateItem(User item, boolean empty) {
