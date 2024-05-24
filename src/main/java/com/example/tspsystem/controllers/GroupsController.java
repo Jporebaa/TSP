@@ -12,16 +12,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.stage.Stage;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -60,7 +60,7 @@ public class GroupsController {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(item == null ? null : item.getName());
+                setText(item == null ? null : item.getLogin());
             }
         });
 
@@ -69,23 +69,20 @@ public class GroupsController {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(item == null ? null : item.getName());
+                setText(item == null ? null : item.getLogin());
             }
         });
         comboBoxUsers.setButtonCell(new ListCell<User>() {
             @Override
             protected void updateItem(User item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(item == null ? null : item.getName());
+                setText(item == null ? null : item.getLogin());
             }
         });
 
-        userNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        usersTableView.setItems(FXCollections.observableArrayList(selectedUsers));
-        usersTableView.getColumns().clear(); // Clear existing columns
-        usersTableView.getColumns().add(userNameColumn); // Add the user name column
+        userNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLogin()));
+        usersTableView.setItems(selectedUsers); // Directly bind the selectedUsers list
     }
-
 
     @FXML
     private void handleCreateGroup() {
@@ -100,10 +97,11 @@ public class GroupsController {
                 .collect(Collectors.toList());
         String groupName = textFieldGroupName.getText();
 
-        // Tworzenie obiektu JSON do wysłania
-        Map<String, Object> groupInfo = new HashMap<>();
-        groupInfo.put("groupName", groupName);
-        groupInfo.put("userIds", userIds);
+        // Create a JSON object to send
+        Map<String, Object> groupInfo = Map.of(
+                "groupName", groupName,
+                "userIds", userIds
+        );
 
         String json = "";
         try {
@@ -130,7 +128,6 @@ public class GroupsController {
                 });
     }
 
-
     private void fetchAllUsers() {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/api/users"))
@@ -139,33 +136,40 @@ public class GroupsController {
 
         httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
-                .thenApply(this::parseUsers)
-                .thenAccept(users -> Platform.runLater(() -> {
-                    allUsers.setAll(users);
-                    comboBoxUsers.setItems(allUsers);
-                }))
+                .thenAccept(this::parseUsers)
                 .exceptionally(e -> {
+                    Platform.runLater(() -> {
+                        System.err.println("Błąd podczas pobierania użytkowników: " + e.getMessage());
+                    });
                     e.printStackTrace();
                     return null;
                 });
     }
 
-    private List<User> parseUsers(String json) {
+    private void parseUsers(String jsonResponse) {
         try {
-            return objectMapper.readValue(json, new TypeReference<List<User>>() {});
-        } catch (IOException e) {
+            System.out.println("Response: " + jsonResponse); // Log the response
+            JsonNode rootNode = objectMapper.readTree(jsonResponse);
+            if (rootNode.has("error")) {
+                Platform.runLater(() -> System.err.println("Błąd podczas pobierania użytkowników: " + rootNode.get("error").asText()));
+                return;
+            }
+            List<User> users = objectMapper.readValue(jsonResponse, new TypeReference<List<User>>() {});
+            Platform.runLater(() -> {
+                allUsers.setAll(users);
+                comboBoxUsers.setItems(allUsers);
+            });
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
     @FXML
     private void onAddUser() {
         User selectedUser = comboBoxUsers.getSelectionModel().getSelectedItem();
-        if (selectedUser != null && !selectedUsers.stream().anyMatch(u -> u.getName().equals(selectedUser.getName()))) {
+        if (selectedUser != null && !selectedUsers.contains(selectedUser)) {
             selectedUsers.add(selectedUser);
             allUsers.remove(selectedUser);
-            comboBoxUsers.setItems(FXCollections.observableArrayList(allUsers));
         }
     }
 
@@ -175,14 +179,12 @@ public class GroupsController {
         if (selectedUser != null) {
             selectedUsers.remove(selectedUser);
             allUsers.add(selectedUser);
-            comboBoxUsers.setItems(FXCollections.observableArrayList(allUsers));
             handleShowSelectedUsers();
         }
     }
 
-
     @FXML
     private void handleShowSelectedUsers() {
-        usersTableView.setItems(FXCollections.observableArrayList(selectedUsers));
+        usersTableView.refresh();
     }
 }

@@ -2,22 +2,18 @@ package com.example.tspsystem.model;
 
 public class User {
     private Integer userId;
-    private String name;
-    private String password; // W praktyce nie przechowuj hasła w kliencie, chyba że jest to absolutnie konieczne
-    private Integer languageId;
     private String login;
+    private String password;
+    private Integer languageId;
 
-    // Konstruktor bezparametrowy
-    public User() {
-    }
+    // Constructors
+    public User() {}
 
-    // Konstruktor z wszystkimi parametrami
-    public User(Integer userId, String name, String password, Integer languageId, String login) {
+    public User(Integer userId, String login, String password, Integer languageId) {
         this.userId = userId;
-        this.name = name;
+        this.login = login;
         this.password = password;
         this.languageId = languageId;
-        this.login = login;
     }
 
     // Getters and setters
@@ -29,12 +25,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -53,23 +49,9 @@ public class User {
         this.languageId = languageId;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    // toString metoda dla wygodniejszego debugowania i wyświetlania danych
+    // Override toString for better display
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", languageId=" + languageId +
-                ", login='" + login + '\'' +
-                '}';
+        return login;
     }
 }
