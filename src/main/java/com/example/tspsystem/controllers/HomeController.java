@@ -71,10 +71,10 @@ public class HomeController {
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, user, password);
                  Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery("SELECT group_id, group_name FROM chat_groups")) {
+                 ResultSet rs = stmt.executeQuery("SELECT id, name FROM chat_group")) { // Adjusted query
                 while (rs.next()) {
-                    int id = rs.getInt("group_id");
-                    String name = rs.getString("group_name");
+                    int id = rs.getInt("id"); // Adjusted column name
+                    String name = rs.getString("name"); // Adjusted column name
                     groupList.add(new ChatGroup(id, name));
                 }
             }
