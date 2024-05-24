@@ -18,8 +18,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 public class LoginController {
 
     @FXML
@@ -36,7 +38,8 @@ public class LoginController {
         }
 
         public static void setCurrentUserSession(UserSession userSession) {
-            SessionManager.currentUserSession = userSession;
+            currentUserSession = userSession;
+            System.out.println("User session set: " + userSession.getUsername());
         }
 
         public static void clearSession() {
@@ -46,13 +49,19 @@ public class LoginController {
 
     public static class UserSession {
         private Integer userId;
+        private String username;
 
-        public UserSession(Integer userId) {
+        public UserSession(Integer userId, String username) {
             this.userId = userId;
+            this.username = username;
         }
 
         public Integer getUserId() {
             return userId;
+        }
+
+        public String getUsername() {
+            return username;
         }
     }
 
@@ -61,7 +70,7 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Budowa obiektu JSON do wysłania
+        // Build JSON payload
         String jsonPayload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", username, password);
 
         HttpClient client = HttpClient.newHttpClient();
@@ -74,13 +83,12 @@ public class LoginController {
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenAccept(response -> {
-                    // Przekształcanie odpowiedzi JSON na mapę
-                    Map<String,Object> responseMap = new Gson().fromJson(response, new TypeToken<Map<String,Object>>(){}.getType());
+                    Map<String, Object> responseMap = new Gson().fromJson(response, new TypeToken<Map<String, Object>>() {}.getType());
 
                     if (!responseMap.containsKey("error")) {
-                        // Pobranie userId z odpowiedzi i ustawienie sesji
                         Number userId = (Number) responseMap.get("userId");
-                        SessionManager.setCurrentUserSession(new UserSession(userId.intValue()));
+                        String responseUsername = (String) responseMap.get("login");
+                        SessionManager.setCurrentUserSession(new UserSession(userId.intValue(), responseUsername));
                         redirectToHome();
                     } else {
                         Platform.runLater(() -> showErrorMessage("Nieprawidłowy login lub hasło."));
@@ -96,16 +104,13 @@ public class LoginController {
     private void redirectToHome() {
         Platform.runLater(() -> {
             try {
-
                 Parent homeView = FXMLLoader.load(getClass().getResource("/com/example/tspsystem/home.fxml"));
                 Scene homeScene = new Scene(homeView);
-
 
                 Stage window = (Stage) usernameField.getScene().getWindow();
                 window.setScene(homeScene);
                 window.show();
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
         });

@@ -63,7 +63,7 @@ public class RegisterController {
     @FXML
     private void handleCancelButtonAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/login.fxml")); // Poprawiona ścieżka do pliku login.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tspsystem/login.fxml"));
             Parent loginView = loader.load();
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
@@ -115,7 +115,7 @@ public class RegisterController {
                 })
                 .thenAccept(this::handleResponse)
                 .exceptionally(e -> {
-                    Platform.runLater(() -> showAlert("Network Error", "Nie można połączyć się z serwerem: " + e.getMessage()));
+                    Platform.runLater(() -> showAlert("Network Error", "Taki użytkownik istnieje już: " ));
                     return null;
                 });
     }

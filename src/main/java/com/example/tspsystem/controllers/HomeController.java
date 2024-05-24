@@ -1,24 +1,28 @@
 package com.example.tspsystem.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import com.example.tspsystem.model.ChatGroup;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.example.tspsystem.model.ChatGroup;
 
 public class HomeController {
 
@@ -28,11 +32,14 @@ public class HomeController {
     private ObservableList<ChatGroup> groupList = FXCollections.observableArrayList();
 
     @FXML
+    private Button userButton;
+
+    @FXML
     public void initialize() {
         loadGroupData();
         groupListView.setItems(groupList);
         groupListView.setOnMouseClicked(this::handleGroupClick);
-        updateUserButton("Nazwa Uzytkownika");
+        fetchAndSetUserName();
     }
 
     @FXML
@@ -44,6 +51,7 @@ public class HomeController {
             }
         }
     }
+
     @FXML
     private void openChatWindow(ChatGroup selectedGroup) {
         try {
@@ -51,21 +59,19 @@ public class HomeController {
             Parent chatView = loader.load();
 
             ChatController chatController = loader.getController();
-            chatController.initializeWithGroup(selectedGroup);  // This method should set the group in the ChatController
+            chatController.initializeWithGroup(selectedGroup);
 
-            // Uzyskanie dostępu do głównej sceny, zakładając, że 'mainStage' to referencja do głównego okna
             Stage mainStage = (Stage) groupListView.getScene().getWindow();
-            mainStage.getScene().setRoot(chatView);  // Ustawienie nowego widoku jako głównego
+            mainStage.getScene().setRoot(chatView);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
     private void loadGroupData() {
         String url = "jdbc:postgresql://localhost:5432/TSP";
         String user = "postgres";
-        String password = "12345";
+        String password = "zaq1";
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -83,12 +89,22 @@ public class HomeController {
         }
     }
 
-    @FXML
-    private Button userButton;
-
-
-    public void updateUserButton(String userName) {
-        userButton.setText(userName);
+    private void fetchAndSetUserName() {
+        Platform.runLater(() -> {
+            LoginController.UserSession userSession = LoginController.SessionManager.getCurrentUserSession();
+            if (userSession != null) {
+                String username = userSession.getUsername();
+                Integer userId = userSession.getUserId();
+                System.out.println("Fetched user session: " + userSession);
+                System.out.println("Fetched username: " + username);
+                System.out.println("Fetched user ID: " + userId);
+                userButton.setText("Użytkownik: " + username );
+                userButton.setStyle("-fx-text-fill: red;");
+            } else {
+                System.out.println("User session is null. No user is currently logged in.");
+                userButton.setText("Nie zalogowano");
+            }
+        });
     }
 
     @FXML
@@ -122,6 +138,7 @@ public class HomeController {
     @FXML
     private void handleLogoutAction(ActionEvent event) {
         try {
+            LoginController.SessionManager.clearSession();
             Parent loginView = FXMLLoader.load(getClass().getResource("/com/example/tspsystem/login.fxml"));
             Scene loginScene = new Scene(loginView);
 
@@ -131,5 +148,13 @@ public class HomeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Błąd");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
