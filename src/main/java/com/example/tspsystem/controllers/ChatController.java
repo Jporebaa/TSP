@@ -414,9 +414,9 @@ public class ChatController {
 
     private void sendToServer(String message) {
         try {
-            String jsonPayload = "{\"group_id\": " + currentGroup.getId() + ", \"message\":\"" + message.replace("\"", "\\\"") + "\"}";
+            String jsonPayload = "{\"groupId\": " + currentGroup.getId() + ", \"message\":\"" + message.replace("\"", "\\\"") + "\"}";
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/messages")) // Upewnij się, że to jest właściwy endpoint
+                    .uri(URI.create("http://localhost:8080/api/chat_messages")) // Upewnij się, że to jest właściwy endpoint
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonPayload, StandardCharsets.UTF_8))
                     .build();
@@ -430,4 +430,8 @@ public class ChatController {
             e.printStackTrace();
         }
     }
+
+
+
 }
+
