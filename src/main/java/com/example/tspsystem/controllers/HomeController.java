@@ -71,9 +71,9 @@ public class HomeController {
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, user, password);
                  Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery("SELECT group_id, group_name FROM chat_groups")) {
+                 ResultSet rs = stmt.executeQuery("SELECT id, group_name FROM chat_group")) {
                 while (rs.next()) {
-                    int id = rs.getInt("group_id");
+                    int id = rs.getInt("id");
                     String name = rs.getString("group_name");
                     groupList.add(new ChatGroup(id, name));
                 }

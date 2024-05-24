@@ -23,6 +23,7 @@ module com.example.tspsystem {
     requires commons.math3;
     requires deeplearning4j.nn;
     requires java.desktop;
+    requires Java.WebSocket;
 
     // Open packages for reflection if needed
     opens com.example.tspsystem to javafx.fxml;
