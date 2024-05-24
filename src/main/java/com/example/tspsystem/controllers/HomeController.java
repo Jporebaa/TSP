@@ -65,7 +65,7 @@ public class HomeController {
     private void loadGroupData() {
         String url = "jdbc:postgresql://localhost:5432/TSP";
         String user = "postgres";
-        String password = "jesthaslo123";
+        String password = "12345";
 
         try {
             Class.forName("org.postgresql.Driver");

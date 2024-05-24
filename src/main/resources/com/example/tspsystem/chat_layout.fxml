@@ -31,8 +31,19 @@
     <center>
         <VBox fx:id="mainContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="10" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
             <ListView fx:id="messageDisplay" VBox.vgrow="ALWAYS" prefHeight="500.0" prefWidth="400.0" />
-            <TextArea fx:id="messageInput" VBox.vgrow="NEVER" prefHeight="50.0" prefWidth="400.0" />
-            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" text="Wyślij" style="-fx-background-color: #3498DB;" textFill="WHITE"/>
+            <HBox alignment="CENTER" spacing="10">
+                <TextArea fx:id="messageInput" HBox.hgrow="ALWAYS" prefHeight="50.0" prefWidth="400.0" />
+                <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" text="Wyślij" style="-fx-background-color: #3498DB;" textFill="WHITE"/>
+                <Button fx:id="recognizeWord" mnemonicParsing="false" style="-fx-background-color: #3498DB;">
+                    <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0">
+                            <image>
+                                <Image url="@../icon/micro.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>
